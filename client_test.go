@@ -56,7 +56,7 @@ func TestQuote(t *testing.T) {
 			break
 		}
 
-		fmt.Printf("Quote(%s) Result: %f", tc.input, quote.Current)
+		fmt.Printf("Quote(%s) Result: %f\n", tc.input, quote.Current)
 		if quote.Current == 0 {
 			t.Fatalf("expected none zero price for symbol: %v", tc.input)
 		}
