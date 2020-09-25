@@ -8,9 +8,14 @@ package finnhub
 // its stock ticker symbol and currency. It's used by the StockSymbols function
 // to return a list of symbols for a given exchange.
 type StockSymbol struct {
-	Description   string `json:"description"`
+	// Symbol description (company or fund name etc)
+	Description string `json:"description"`
+	// Display symbol name.
 	DisplaySymbol string `json:"displaySymbol"`
-	Symbol        string `json:"symbol"`
-	Type          string `json:"type"`
-	Currency      string `json:"currency"`
+	// Unique symbol used to identify this symbol used in /stock/candle endpoint.
+	Symbol string `json:"symbol"`
+	// Security type.
+	Type string `json:"type"`
+	// Price's currency. This might be different from the reporting currency of fundamental data.
+	Currency string `json:"currency"`
 }
