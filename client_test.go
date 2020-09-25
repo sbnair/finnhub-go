@@ -5,6 +5,7 @@
 package finnhub
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -21,7 +22,7 @@ func TestSymbols(t *testing.T) {
 	for _, tc := range tests {
 		symbols, err := client.StockSymbols(tc.input)
 		if err != nil {
-			t.Fatalf("expected: %v got and error: %v", tc.want, err)
+			t.Fatalf("error: %v", err)
 			break
 		}
 
@@ -39,21 +40,25 @@ func TestSymbols(t *testing.T) {
 	}
 }
 
-// func TestQuote(t *testing.T) {
-// 	tests := []struct {
-// 		input string
-// 		want  string
-// 	}{
-// 		{input: "TSLA", want: "Tesla, Inc."},
-// 		{input: "GOOG", want: "Alphabet Inc."},
-// 	}
+func TestQuote(t *testing.T) {
+	tests := []struct {
+		input string
+	}{
+		{input: "TSLA"},
+		{input: "VWRL.L"},
+	}
 
-// 	client := NewClient("")
-// 	for _, tc := range tests {
-// 		quote, _ := client.Quote(tc.input)
-// 		got := quote.Price
-// 		if !reflect.DeepEqual(tc.want, got) {
-// 			t.Fatalf("expected: %v, got: %v", tc.want, got)
-// 		}
-// 	}
-// }
+	client := NewClient("")
+	for _, tc := range tests {
+		quote, err := client.Quote(tc.input)
+		if err != nil {
+			t.Fatalf("error: %v", err)
+			break
+		}
+
+		fmt.Printf("Quote(%s) Result: %f", tc.input, quote.Current)
+		if quote.Current == 0 {
+			t.Fatalf("expected none zero price for symbol: %v", tc.input)
+		}
+	}
+}

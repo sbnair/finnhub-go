@@ -68,3 +68,40 @@ func (c *Client) StockSymbols(exchange string) ([]StockSymbol, error) {
 
 	return result, nil
 }
+
+// Quote returns the real-time quote data for US stocks.
+func (c *Client) Quote(symbol string) (Quote, error) {
+	result := Quote{}
+
+	// build URL
+	endpoint, err := url.Parse(baseURL)
+	if err != nil {
+		return result, err
+	}
+
+	endpoint.Path += "/quote"
+
+	// Query params
+	params := url.Values{}
+	params.Add("symbol", symbol)
+	params.Add("token", c.token)
+	endpoint.RawQuery = params.Encode()
+
+	resp, err := http.Get(endpoint.String())
+	if err != nil {
+		return result, err
+	}
+
+	defer resp.Body.Close()
+
+	if resp.StatusCode == 429 {
+		return result, ErrLimitExceeded
+	}
+
+	decodeErr := json.NewDecoder(resp.Body).Decode(&result)
+	if decodeErr != nil {
+		return result, decodeErr
+	}
+
+	return result, nil
+}
