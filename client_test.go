@@ -11,11 +11,11 @@ import (
 
 func TestSymbols(t *testing.T) {
 	tests := []struct {
-		input string
+		input Exchange
 		want  string
 	}{
-		{input: "US", want: "TSLA"},
-		{input: "L", want: "VWRL.L"},
+		{input: ExchangeUS, want: "TSLA"},
+		{input: ExchangeUK, want: "VWRL.L"},
 	}
 
 	client := NewClient("")

@@ -16,7 +16,7 @@ Get a list of stock symbols of companies listed on the NYSE and NASDAQ.
 // using an empty string will limit the amount of API calls per day.
 client := finnhub.NewClient("")
 
-symbols, err := client.StockSymbols("US")
+symbols, err := client.StockSymbols(ExchangeUS)
 if err != nil {
     fmt.Printf("error: %v\n", err)
 }

@@ -33,7 +33,7 @@ func NewClient(token string) Client {
 }
 
 // StockSymbols returns stock symbols listed on the specified exchange.
-func (c *Client) StockSymbols(exchange string) ([]StockSymbol, error) {
+func (c *Client) StockSymbols(exchange Exchange) ([]StockSymbol, error) {
 	result := []StockSymbol{}
 
 	// build URL
@@ -46,7 +46,7 @@ func (c *Client) StockSymbols(exchange string) ([]StockSymbol, error) {
 
 	// Query params
 	params := url.Values{}
-	params.Add("exchange", exchange)
+	params.Add("exchange", exchange.String())
 	params.Add("token", c.token)
 	endpoint.RawQuery = params.Encode()
 
